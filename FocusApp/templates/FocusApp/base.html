@@ -1,0 +1,89 @@
+{% load static from staticfiles %}
+ 
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'FocusApp/css/fontawesome.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'FocusApp/css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'FocusApp/css/main.css' %}"/>
+
+  <link href="https://fonts.googleapis.com/css?family=Girassol&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
+      <script src="{% static 'FocusApp/js/jquery-3.4.1.min.js' %}"></script>
+      <script src="{% static 'FocusApp/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'FocusApp/js/main.js' %}"></script>
+    
+
+
+
+
+{% block title %}
+  <title>base</title>
+{% endblock %}
+
+</head>
+
+  <body>
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-light">
+
+    {% block mainlink %}
+      <a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'welcome-page'%}">FOCUS |</a>
+      <a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'welcome-page'%}">Data Platform for Clinical Studies</a>
+     {% endblock %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+      </ul>
+      {% block navbar %}
+      <form class="form-inline my-2 my-lg-0">
+        
+       <li class="nav-item list-unstyled col-md-6" >
+          <button class="btn  col-md-offset-5" style="background-color:#14328f;color: white;padding: 3px 12px; font-size:20px;" type="button" onclick="location.href='{% url 'login-page'%}'">Login</button>
+        </li>
+        <li class="nav-item list-unstyled col-md-6">
+          <button class="btn col-md-offset-2" style="background-color: #14328f;color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'register-page'%}'">Register </button>
+        </li>
+      </form>
+      {% endblock %}
+    </div>
+  </nav>
+
+      {% block content %}
+      {% endblock %}
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

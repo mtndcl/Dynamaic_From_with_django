@@ -1,0 +1,321 @@
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>project page</title>
+{% endblock %}
+
+
+
+
+{% block mainlink %}
+<a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'profile-page'  page='0' %}">FOCUS |</a>
+<a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'profile-page'   page='0' %}">Data Platform for Clinical Studies</a>
+{% endblock %}
+
+{% block navbar %}
+
+  <form class="form-inline my-2 my-lg-0">
+
+      <button  style="background-color: #14328f;color: white; padding: 6px 10px; font-size:20px;"class="btn  my-2 my-sm-0" type="button" onclick="location.href='{% url 'profile-page'  page='0' %}'"> My Profile</button>
+  </form>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+<p style="margin-left : 12%; font-size : 400%; color : black; font-weight : bold;">Project Name : {{project.title}}</p>
+<div  class="container align-self-center">
+  <div  class="row justify-content-center">
+    <div class="tabs">
+
+
+      <input name="tabs" type="radio" id="tab-1"  class="input"/>
+      <label for="tab-1" class="label">Project</label>
+      <div class="panel">
+        <p style="font-size:300%;color:black; font-weight: bold;">Information About Project</p>
+        <p style="text-transform:capitalize; font-size:200%;color:black; font-weight :bold; margin-left:3%; ">Project Owner :  {{owner.first_name}} {{owner.last_name}}</p>
+        <br>
+        <p style="text-transform:capitalize;font-size:200%;color:black;font-weight :bold; margin-left:3%;">Project Name :  {{project.title}}</p>
+        <br>
+        <p style="text-transform:capitalize;font-size:200%;color:black;font-weight :bold;margin-left:3%; ">Project Topic :  {{project.abstract}}</p>
+        <br>
+
+    {% if current_roll.roll == "OWNER"  %}
+      {%  if not project.have_data %}
+            {%  if not project.have_table %}
+            <button onclick="location.href='{% url 'addfield-page' project_id=project.id   %}'" class="btn  col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10" style="background-color: #14328f; color: white; padding: 2px 10px; font-size:15px;" type="button" >Create Form</button>
+            {%  else %}
+            <button onclick="location.href='{% url 'addfield-page' project_id=project.id   %}'" class="btn  col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10" style="background-color: #14328f; color: white; padding: 2px 10px; font-size:15px; " type="button" >Edit Form</button>
+            {%  endif  %}
+           <button onclick="location.href='{% url 'deleteproject-page' project_id=project.id   %}'" class="btn  col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10" style="background-color: #8e0606; color: white; padding: 2px 10px; font-size:15px; margin-top:2%;" type="button" >Delete Project</button>
+
+      {%  endif %}
+    {%  endif %}
+
+
+      </div>
+
+
+
+
+      <input name="tabs" type="radio" id="tab-2" checked="checked" class="input"/>
+      <label for="tab-2" class="label">Members</label>
+      <div class="panel">
+        <p style="font-size:300%;color:black; font-weight: bold;">Project Members</p>
+        {% for member , rol in mylist_accepted %}
+
+
+
+
+          <div class="row">
+
+            <div class="col-5">
+
+               <p style="font-size:200%;color:navy; font-weight: bold;">{{member.first_name}}</p>
+            </div>
+            <div class="col-6">
+
+                {% if rol.roll == "OWNER" %}
+
+                <div class="row">
+                  <div class=col-1>
+                    <i class="fas fa-user-md fa-2x"></i>
+
+                  </div>
+
+                  <div class="col-2">
+                   <p style="font-size:150%;color:navy; font-weight: bold;">{{rol.roll}}</p>
+                  </div>
+              </div>
+               {% endif %}
+
+
+                  {%if rol.roll == "MEMBER" %}
+                <div class="row">
+                  <div class=col-1>
+                      <i class="far fa-user fa-2x"></i>
+                  </div>
+
+                  <div class="col-4">
+                   <p style="font-size:150%;color:navy; font-weight: bold;">{{rol.roll}}</p>
+
+                  </div>
+                  {%if current_user == owner %}
+                  <div class="col-4">
+
+
+                    <button class="btn  my-2 my-sm-0" style="background-color: #8e0606;color: white; font-size:10px;" type="button" onclick="location.href='{% url 'removefromproject-page'  project_id=project.id   user_id=member.id%}'"> Remove User From Project</button>
+                  </div>
+                  {% endif %}
+
+                </div>
+                {% endif %}
+
+
+
+                  {% if rol.roll == "MANAGER" %}
+
+                    <div class="row">
+                  <div class=col-1>
+                      <i class="far fa-user fa-2x"></i>
+                  </div>
+
+                  <div class="col-4">
+                   <p style="font-size:150%;color:navy; font-weight: bold;">{{rol.roll}}</p>
+                  </div>
+
+                  {% if current_user == owner %}
+                  <div class="col-4">
+
+
+                    <button class="btn btn-outline-success my-2 my-sm-0" style="background-color: red;color: white; font-size:10px;" type="button" onclick="location.href='{% url 'removefromproject-page'  project_id=project.id   user_id=member.id%}'"> Remove User From Project</button>
+                  </div>
+
+                  {% endif %}
+
+                </div>
+
+                {% endif %}
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+
+    {% endfor %}
+
+          {% if current_user == owner %}
+              <p  style="font-size:300%;color:black; font-weight: bold; ">Invite Users</p>
+          {% for member , rol in mylist_not_accepted %}
+                <p style="font-size:200%;color:black; font-weight :bold ;margin-left:0%; "> {{member.first_name}} {{rol.is_acc}} </p>
+          {% endfor %}
+          {% endif %}
+
+    {% if current_user == owner %}
+    <p  style="font-size:300%;color:black; font-weight: bold; ">Other Users</p>
+
+
+
+
+
+
+    {% for member in unmembers %}
+
+        {% if owner.id != member.id  %}
+        {% if not member.is_superuser  %}
+
+
+        <form method="get" action="{%url 'addtoproject-page'  project_id=project.id   user_id=member.id %}">
+
+            <div class="row">
+
+               <div class="col-4">
+                 <p style="font-size:150%;color:black; font-weight :bold ;margin-left:3%; "> {{member.first_name}}  </p>
+
+
+
+               </div>
+
+
+
+
+              <div class="col-4">
+
+            <select class="form-control" id="roll" name="roll">
+              <option>Member</option>
+              <option>Manager</option>
+            </select>
+
+
+
+              </div>
+
+
+              <div class="col-4">
+
+
+              <button class="btn  my-2 my-sm-0" style=" background-color: #14328f;color: white; font-size:12px;margin-left:10%;" type="submit" > Add User to Project</button>
+
+              </div>
+
+
+
+
+            </div>
+
+
+
+
+        </form>
+         {% endif %}
+        {% endif %}
+
+
+
+    {% endfor %}
+    {% endif %}
+      </div>
+
+
+
+      <input name="tabs" type="radio" id="tab-3" class="input"/>
+      <label for="tab-3" class="label">Data</label>
+      <div class="panel">
+
+       {% if project.have_table  %}
+
+
+
+               <button onclick="location.href='{% url 'viewform-page' project_id=project.id %}'" class="btn btn-success " style="background-color: #14328f;border-color:#14328f;color: white; padding: 2px 4px; font-size:20px; margin-bottom:2%; margin-left:1%" type="button" >Fill Form</button>
+
+
+
+
+  <table class="table responsive">
+
+
+    <thead class="">
+    <tr>
+
+       <th style="font-size:20px; ">Id</th>
+      <th style="font-size:20px; ">Author</th>
+      <th style="font-size:20px; ">Published Time</th>
+        <th style="font-size:20px; ">Update</th>
+        <th style="font-size:20px; ">View Form</th>
+         <th style="font-size:20px; ">Delete</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+  {% for record,author in mytable %}
+
+
+
+      <tr>
+
+         {% for key, value in record.items %}
+
+            {% if key == 'id' %}
+             <td style="font-size:20px; ">{{value}}</td>
+          {% endif %}
+          {% if key == 'author_id' %}
+               <td style="font-size:20px; ">{{ author.first_name }}</td>
+          {% endif  %}
+          {% if key == 'published_date' %}
+             <td style="font-size:20px; ">{{value}}</td>
+          {% endif %}
+
+        {% endfor %}
+
+        <td><button onclick="location.href='{% url 'viewupdateDataFromTable-page' project_id=project.id  data_id=record.id %}'"
+                    style="background-color: green; color: white; padding: 2px 4px; font-size:15px;  margin-left:1%"
+                    class="btn "  type="button" > Update </button> </td>
+          <td> <button onclick="location.href='{% url 'exportdata-page' project_id=project.id data_id=record.id  %}'"
+                       class="btn  " style="background-color: #14328f;color: white; padding: 2px 4px; font-size:15px;  margin-left:1%" type="button" >View Form</button> </td>
+          <td> <button onclick="location.href='{% url 'deleteDataFromTable-page' project_id=project.id  data_id=record.id %}'"
+                       style="background-color: #8e0606;color: white; padding: 2px 4px; font-size:15px;  margin-left:1%"
+                       class="btn "  type="button" > Delete </button> </td>
+
+
+
+
+    </tr>
+
+{% endfor %}
+    </tbody>
+</table>
+           {% endif  %}
+
+      </div>
+
+
+
+      <input name="tabs" type="radio" id="tab-4" class="input"/>
+      <label for="tab-4" class="label">Message</label>
+      <div class="panel">
+        <p style="font-size:300%;color:black; font-weight: bold;">Send Message</p>
+        <form  method="POST"  action="{% url 'SendNotifications-page' project_id=project.id owner_id=project.owner_id%}" >
+          {% csrf_token %}
+            <textarea cols=115 rows=4 style="resize:initial; margin-left:2%;font-size:200%;"  type="input" name="message"  ></textarea>
+            <br>
+            <a style="margin-left:2%; font-size:150%;">Send to all users</a>
+            <input type="checkbox" style="margin-left:2%; transform : scale(1.5);" id="myCheck" name="checked" >
+          <button style="background-color: #14328f;border-color:#14328f;color: white; padding: 6px 10px; font-size:20px;margin-left:90%;"class="btn btn-outline-success my-2 my-sm-0"  type="submit" > Send </button>
+           </form>
+       </div>
+    </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>profil page</title>
+{% endblock %}
+
+
+
+{% block mainlink %}
+<a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'profile-page'  page='0' %}">FOCUS |</a>
+<a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'profile-page'   page='0' %}">Data Platform for Clinical Studies</a>
+{% endblock %}
+
+
+{% block navbar %}
+	{% if user.is_authenticated %}
+		<strong style="font-size:200%;color:white;">{{ user.first_name }} </strong>
+	{% endif %}
+  <form class="form-inline my-2 my-lg-0">
+
+      <li class="nav-item list-unstyled col-md-6">
+          <button class="btn  col-md-offset-6" style="border-color:#8e0606 ;background-color:#8e0606; color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'logout-page'%}'">Log out</button>
+        </li>
+  </form>
+{% endblock %}
+
+
+
+{% block content %}
+
+<form class="form-inline my-2 my-lg-0">
+
+     <p class="row col-md-6">
+          <button class="btn " style="margin-left:5%; background-color: gray;color: white; padding: 8px 20px; font-size:20px;" type="button" onclick="location.href='{% url 'createproject-page' title=' '  abstract=' ' %}'">Create Project </button>
+		  <button type="button" onclick="location.href='{% url 'createproject-page' title=' '  abstract=' ' %}'" class="fas fa-plus-circle fa-4x" style="padding-left:10px;color:#14328f"></button>
+     </p>
+</form>
+{% for project in myprojects %}
+
+    
+
+  <div class="container col-md-4">
+
+
+<p  style=" background-color: #F5F5F5; width:100%;border: 0.05px solid 	lightsteelblue;  padding: 50px;   margin-right:20px;font-size: 200%; font-family: 'Fjalla One', sans-serif;">
+
+        <i class="fas fa-desktop fa-1x " style="margin-right:5%;"></i>
+   Project Name :{{project.title}}
+  
+   
+
+
+  <button onclick="location.href='{% url 'project-page' slug=project.id  tab='projecttab' %}'" class="btn  col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10" style="background-color: #14328f; color: white; padding: 2px 10px; font-size:15px;" type="button" >Go</button>
+
+    </p>
+
+  </div>
+
+{% endfor %}
+
+<div style="position:fixed; margin-left:42%; bottom:5px;">
+  <i  class="fas fa-arrow-circle-left fa-3x"
+   onclick="location.href='{% url 'backward-page' page=page  %}' "style="background-color: #14328f; color: white; padding: 4px 40px; "  ></i>
+
+ <i  class="fas fa-arrow-circle-right fa-3x"
+  onclick="location.href='{% url 'forwardpage-page' page=page  %}' " style="background-color: #14328f; color: white; padding: 4px 40px; "  ></i>
+
+</div>
+
+
+
+
+{% endblock %}

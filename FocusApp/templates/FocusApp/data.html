@@ -1,0 +1,47 @@
+<a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'profile-page'  page='0' %}">FOCUS |</a>
+<a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'profile-page'   page='0' %}">Data Platform for Clinical Studies</a>
+
+<div style=" background-color: #F5F5F5; border: 0.05px solid  lightsteelblue;  padding: 50px; max-width:85%; margin-top:2%; margin-left:5%; font-size: 200%; font-family: 'Rubik', sans-serif;">
+
+
+<div style=" background-color: #F5F5F5; border: 0.05px solid  black;  max-width:20%;  margin-bottom:5%; margin-left:2%; font-size: 60%; font-family: 'Rubik', sans-serif;">
+
+	{% for  key,value in dic.items  %}
+		{% if key == 'id'  %}
+			<p style="font-size:80%; margin-left:5%; font-weight:bold; "> Form Id : {{value}}</p>
+		{% endif %}
+		{% if  key == 'author_name' %}
+			<p style="font-size:80%; margin-left:5%; font-weight:bold;  "> User : {{value}}</p>
+		{% endif %}
+		{% if key == 'published_date' %}
+
+
+			<p style="font-size:80%; margin-left:5%; font-weight:bold; ">Date : {{value}}</p>
+		{% endif %}
+	{% endfor %}
+</div>
+	<table class="table-responsive" style="font-family: arial, sans-serif;font-size:80%; border-collapse: collapse; margin-left:10%; width:80%;">
+	<tr>
+		<th style=" width:40%;border: 1px solid #dddddd; background-color:gray;text-align: center;padding: 5px;"> Field Name </th>
+		<th style=" width:40%;border: 1px solid #dddddd; background-color:gray;text-align: center;padding: 5px;"> Field Value</th>
+	</tr>
+
+	{% for  key,value in dic.items  %}
+		{% if not  key == 'id'  %}
+		{% if not key == 'author_name' %}
+		{% if not key == 'published_date' %}
+			<tr>
+			<td style="border: 1px solid #dddddd;text-align: left; text-transform:capitalize;padding: 8px;">{{key}}</td>
+
+			<td style="border: 1px solid #dddddd;text-align: left; padding: 8px;">
+				{{value}}
+			</td>
+			</tr>
+		{% endif %}
+		{% endif %}
+		{% endif %}
+	{% endfor %}
+
+</table>
+</div>
+

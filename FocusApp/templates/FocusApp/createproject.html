@@ -1,0 +1,77 @@
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>create project page</title>
+{% endblock %}
+
+{% block mainlink %}
+<a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'profile-page'  page='0' %}">FOCUS |</a>
+<a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'profile-page'   page='0' %}">Data Platform for Clinical Studies</a>
+{% endblock %}
+
+
+{% block navbar %}
+
+<form class="form-inline my-2 my-lg-0">
+		<li class="nav-item list-unstyled col-md-6">
+          <button class="btn  col-md-offset-6" style="border-color:#8e0606 ;background-color:#8e0606; color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'logout-page'%}'">Log out</button>
+        </li>
+
+ </form>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+
+ {% if messages %}
+        <div class="text-danger">
+          {% for message in messages %}
+
+            <div  class="container align-self-center">
+              <div  class="row justify-content-center">
+
+
+                <label>  <b>{{ message }}</b></label>
+
+              </div>
+            </div>
+
+          {% endfor %}
+        </div>
+      {% endif %}
+
+<div style=" background-color: #F5F5F5; border: 0.05px solid  lightsteelblue;  padding: 50px; margin-left :5% ;margin-right :5%;font-size: 200%; font-family: 'Rubik', sans-serif;">
+<form method="post" action="{%url 'saveproject-page'  %}">
+
+     {% csrf_token %}
+        <h5 style="font-size:180%; text-decoration: underline;  text-align:center;">Create New Project</h5>
+    <br>
+     <a style="font-size: 150%; margin-left:15%; color: black;">Title :</a>
+     <input style="margin-left:6%;" type="text" name="title"  value="{{title}}">
+
+    <br><br>
+     <a style="font-size: 150%;  margin-left:12.5%;position: fixed;color: black;">Abstract : </a>
+
+    <textarea cols=60  rows=4 style="margin-left:27.5%;"  type="textarea" name="abstract"   >{{abstract}}</textarea>
+<br>
+       <button class="btn " style="font-size:80%; max-width: 200px; margin-left:45%; margin-top:2%; color:white; background-color:#14328f;"
+               type="submit" > Save Project </button>
+  </form>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

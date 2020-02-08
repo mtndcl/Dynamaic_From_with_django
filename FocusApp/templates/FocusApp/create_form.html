@@ -1,0 +1,190 @@
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>create project page</title>
+{% endblock %}
+
+
+{% block mainlink %}
+<a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'profile-page'  page='0' %}">FOCUS |</a>
+<a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'profile-page'   page='0' %}">Data Platform for Clinical Studies</a>
+{% endblock %}
+
+
+{% block navbar %}
+
+<form class="form-inline my-2 my-lg-0">
+		<li class="nav-item list-unstyled col-md-6">
+          <button class="btn  col-md-offset-6" style="border-color:#8e0606 ;background-color:#8e0606; color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'logout-page'%}'">Log out</button>
+        </li>
+
+ </form>
+{% endblock %}
+
+
+{% block content %}
+
+ {% if messages %}
+        <div class="text-danger">
+          {% for message in messages %}
+
+            <div  class="container align-self-center">
+              <div  class="row justify-content-center">
+
+
+                <label>  <b>{{ message }}</b></label>
+
+              </div>
+            </div>
+
+          {% endfor %}
+        </div>
+      {% endif %}
+<div style=" background-color: #F5F5F5; border: 0.05px solid  lightsteelblue;  padding: 50px; max-width:80%; margin-left:10%; font-size: 200%; font-family: 'Rubik', sans-serif;">
+
+<a class="col-sm-3 col-sm-offset-3 col-md-6 col-md-offset-5"style="font-size:150%; margin-bottom:2%; text-decoration: underline; "> Create Form </a>
+
+<table class="table-responsive" style="font-family: arial, sans-serif;border-collapse: separate; margin-left:3%; max-width:100%;">
+  <tr>
+    <th style="border: 1px solid #dddddd;text-align: center;padding: 5px; text-decoration: underline;">Field Name</th>
+    <th style="border: 1px solid #dddddd;text-align: center;padding: 5px;font-size:100%; color: black;  font-weight:bold; text-decoration: underline;">Field Type</th>
+    <th style="border: 1px solid #dddddd;text-align: center;padding: 5px;font-size:100%; color: black;  font-weight:bold; text-decoration: underline;">Default Value</th>
+      <th style="border: 1px solid #dddddd;text-align: center;padding: 5px;font-size:100%; color: black;  font-weight:bold; text-decoration: underline;">Mandatory?</th>
+      <th style="border: 1px solid #dddddd;text-align: center;padding: 5px;font-size:100%; color: black;  font-weight:bold; text-decoration: underline;">Update</th>
+      <th style="border: 1px solid #dddddd;text-align: center;padding: 5px;font-size:100%; color: black;  font-weight:bold; text-decoration: underline;">Delete</th>
+  </tr>
+
+
+    {% for data  in datas %}
+
+
+
+     <form method="post" action="{%url 'updatefield-page'  project_id=project_id field_id=data.id %}">
+
+           {% csrf_token %}
+         <tr class="trow" >   
+           <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><input type="text"   name="fieldname"  value="{{data.fieldname}}"></td>
+
+
+          <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><select style="margin-right:7%;" class="selectpicker"  name="fieldtype"  >
+
+            {%  if  data.fieldtype == 'Text' %}
+              <option selected="selected" >Text</option>
+              <option  >Integer</option>
+              <option>Double</option>
+              <option>Checkbox</option>
+              <option>Date</option>
+               <option  >Image</option>
+            {%  elif  data.fieldtype == 'Integer' %}
+              <option  >Text</option>
+              <option  selected="selected" >Integer</option>
+              <option>Double</option>
+              <option>Checkbox</option>
+              <option>Date</option>
+               <option  >Image</option>
+             {%  elif  data.fieldtype == 'Double' %}
+              <option  >Text</option>
+              <option >Integer</option>
+              <option  selected="selected" >Double</option>
+              <option>Checkbox</option>
+              <option>Date</option>
+               <option  >Image</option>
+             {%  elif  data.fieldtype == 'Checkbox' %}
+              <option  >Text</option>
+              <option >Integer</option>
+              <option >Double</option>
+              <option   selected="selected" >Checkbox</option>
+              <option>Date</option>
+              <option  >Image</option>
+             {%  elif  data.fieldtype == 'Date' %}
+              <option  >Text</option>
+              <option >Integer</option>
+              <option >Double</option>
+              <option   >Checkbox</option>
+              <option selected="selected"  >Date</option>
+               <option  >Image</option>
+
+            {%  elif  data.fieldtype == 'Image' %}
+              <option  >Text</option>
+              <option >Integer</option>
+              <option >Double</option>
+              <option   >Checkbox</option>
+              <option  >Date</option>
+              <option   selected="selected" >Image</option>
+            {% endif %}
+          </select>
+        </td>
+
+             
+             <td class="mm" style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><input type="text" class="fielddefaultvalue" name="fielddefaultvalue"  value="{{data.fielddefaultvalue}}"></td>
+          
+          
+              {% if data.fieldmondatory %}
+                 <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><input type="checkbox" checked="True"  style="transform : scale(2);" class="fieldmondatory" name="fieldmondatory"  ></td>
+                {% else %}
+                  <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><input type="checkbox" style="transform : scale(2);"class="fieldmondatory"  name="fieldmondatory"  ></td>
+              {% endif %}
+           
+            <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><button
+                 class="btn my-2 my-sm-0" style="font-size:60%; max-width: 200px; color:white;text-align: center; background-color:#14328f;" type="submit" > Update </button></td>
+          <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;"><button onclick="location.href='{% url 'deletefield-page' project_id=project_id  field_id=data.id %}'"
+                                                                                         class="btn my-2 my-sm-0" style="font-size:60%; max-width: 200px; color:white;text-align: center; background-color:#8e0606;" type="button" > Delete </button></td>
+
+
+
+
+         </tr>
+      </form>
+
+
+
+    {% endfor %}
+
+    <form method="post" action="{%url 'addfield-page'  project_id=project_id   %}">
+       {% csrf_token %}
+      <tr class="trow">
+        <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;">
+          <input type="text"  name="fieldname"  value="{{data.fieldname}}">
+        </td>
+
+
+        <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;">
+          <select  class="selectpicker" style="margin-right:7%;" name="fieldtype"  >
+              <option selected="selected" >Text</option>
+              <option  >Integer</option>
+              <option>Double</option>
+              <option>Checkbox</option>
+              <option>Date</option>
+              <option  >Image</option>
+          </select>
+        </td>
+
+        <td class="mm"  style="border: 1px solid #dddddd;text-align: center;padding: 8px;">
+          <input type="text" class="fielddefaultvalue" name="fielddefaultvalue"  >
+        </td>
+        <td style="border: 1px solid #dddddd;text-align: center;padding: 8px;">
+          <input type="checkbox" style="transform : scale(2);"name="fieldmondatory"  class="fieldmondatory" value="checked">
+        </td>
+      </tr>
+      <tr>
+        <td><button type="submit" class="fas fa-plus-circle fa-8x "style=" color: #14328f;font-size:150%;max-width: 80px; "> </button></td>
+      </tr>
+    </form>
+
+</table>
+<br>
+   {% if  datas.count > 0 %}
+   <form  method="post" style="text-align:center;" action="{%url 'createdatabase-page'  project_id=project_id   %}" >
+
+       {% csrf_token %}
+       <button class="btn " style="font-size:100%; max-width: 200px; color:white;text-align: center; background-color:#14328f;" type="submit" >Save Form </button>
+
+    </form>
+  {% endif %}
+</div>
+
+
+
+
+{% endblock %}
+

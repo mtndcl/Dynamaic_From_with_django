@@ -1,0 +1,61 @@
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>admin page</title>
+{% endblock %}
+
+
+{% block navbar %}
+
+  <form class="form-inline my-2 my-lg-0">
+
+      <li class="nav-item list-unstyled col-md-6">
+          <button class="btn btn-success btn-lg col-md-offset-6" style="background-color: red;border-color:red;color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'logout-page'%}'">Log out </button>
+        </li>
+  </form>
+{% endblock %}
+
+
+{% block content %}
+
+     <button class="btn  col-sm-1 col-sm-offset-2 col-md-1 col-md-offset-4" style="background-color: #14328f; color: white; height:40px; padding: 2px 6px; font-size:15px;"type="button" onclick="location.href='{% url 'adminuser-page'  page='0' %}'" >Users </button>
+
+     <button class="btn  col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-1" style="background-color: #14328f; color: white; height:40px; padding: 2px 6px; font-size:15px;" type="button" onclick="location.href='{% url 'adminproject-page'  page='0' %}'">Projects </button>
+
+<br>
+<br>
+<br>
+<br>
+     {%  for  project in all_project %}
+
+     	
+	  <div class="container col-md-4">
+
+
+	<p  style=" background-color: #F5F5F5; width:100%;border: 0.05px solid 	lightsteelblue;  padding: 50px;   margin-right:20px;font-size: 200%; font-family: 'Fjalla One', sans-serif;">
+
+	        <i class="fas fa-desktop fa-1x " style="margin-right:5%;"></i>
+	   Project Name :{{project.title}}
+	  
+	   
+
+
+	  <button onclick="location.href='{% url 'project-page' slug=project.id  tab='projecttab' %}'" class="btn  col-sm-2 col-sm-offset-10 col-md-2 col-md-offset-10" style="background-color: #14328f; color: white; padding: 2px 10px; font-size:15px;" type="button" >Go</button>
+
+	    </p>
+
+	  </div>
+     {% endfor %}
+
+<div style="position:fixed; margin-left:42%; bottom:5px;">
+  <i  class="fas fa-arrow-circle-left fa-3x"
+   onclick="location.href='{% url 'backwardproject-page' page=page %}'"
+   style="background-color: #14328f; color: white; padding: 4px 40px; "  ></i>
+
+ <i  class="fas fa-arrow-circle-right fa-3x"
+   onclick="location.href='{% url 'forwardproject-page' page=page %}'"
+    style="background-color: #14328f; color: white; padding: 4px 40px; "  ></i>
+
+</div>
+        
+{% endblock %}

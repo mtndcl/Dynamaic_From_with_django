@@ -1,0 +1,134 @@
+{% extends 'FocusApp/base.html' %}
+
+
+
+
+{% block title %}
+<title>Register Page</title>
+{% endblock %}
+
+
+
+
+{% block navbar %}
+
+{% endblock %}
+
+
+{% block content %}
+<section id="cover">
+
+  <div class="container ">
+    <div class="row">
+
+    <article class="card-body mx-auto" style="max-width: 60%; max-height:200%">
+
+      <h4 class="card-title mt-3 text-center">Register</h4>
+      {% if messages %}
+        <div class="text-danger">
+          {% for message in messages %}
+
+            <div  class="container align-self-center">
+              <div  class="row justify-content-center">
+      
+
+                <label>  <b>{{ message }}</b></label>
+                
+              </div>
+            </div>
+     
+          {% endfor %}
+        </div>
+      {% endif %}
+      <div class="text-danger text-left "style="font-size:200%;">
+        <p>{{ u_form.errors.password2 }}</p>
+      </div>
+      <div class="text-danger text-left"style="font-size:200%;">
+        <p>{{ p_form.errors.organization }}</p>
+      </div>
+      <div class="text-danger text-left"style="font-size:200%;">
+        <p>{{ p_form.errors.phone_number }}</p>
+      </div>
+      <div class="text-danger text-left"style="font-size:200%;">
+         <p>{{ u_form.errors.email }}</p>
+      </div>
+      <div class="text-danger text-left"style="font-size:200%;">
+        <p>{{ u_form.errors.last_name }}</p>
+      </div>
+      <div class="text-danger text-left"style="font-size:200%;">
+        <p>{{ u_form.errors.first_name }}</p>
+      </div>
+      <form   method="POST">
+        {% csrf_token %}
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text "> <i class="fas fa-user fa-2x"></i> </span>
+          </div>
+
+              <input name="first_name" class="form-control"style="font-size:200%;" placeholder="Name" type="text" >
+          </div> <!-- form-group// -->
+          <div class="form-group input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text "> <i class="fas fa-user fa-2x"></i> </span>
+           </div>
+
+              <input name="last_name" class="form-control" style="font-size:200%; "placeholder="Last Name" type="text" >
+          </div> <!-- form-group// -->
+
+
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-envelope fa-2x"></i> </span>
+           </div>
+
+              <input name="email" class="form-control"style="font-size:200%;" placeholder="Email address" type="email" >
+          </div> <!-- form-group// -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-phone fa-2x"></i> </span>
+          </div>
+          <select class="custom-select" style="font-size:200%;max-width: 120px;">
+              <option selected="">+90</option>
+              <option selected="">+1</option>
+              <option selected="">+12</option>
+              <option selected="">+55</option>
+             
+          </select>
+
+            <input name="phone_number" class="form-control" style="font-size:200%;" placeholder="Phone number" type="text">
+          </div> <!-- form-group// -->
+          <div class="form-group input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text "> <i class="fas fa-user fa-2x"></i> </span>
+           </div>
+
+              <input name="organization" class="form-control" style="font-size:200%;"placeholder="Organization" type="text" >
+          </div> <!-- form-group// --> <!-- form-group end.// -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock fa-2x"></i> </span>
+          </div>
+        
+              <input name="password1" class="form-control" style="font-size:200%;"placeholder="Create password" type="password" >
+          </div> <!-- form-group// -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend ">
+              <span class="input-group-text"> <i class="fa fa-lock fa-2x"></i> </span>
+          </div>
+              <input name="password2" class="form-control"style="font-size:200%;" placeholder="Repeat password" type="password" >
+          </div> <!-- form-group// -->
+          <div class="form-group">
+              <button type="submit" class=" btn"style=" width:100%;font-size:200%;background-color:#14328f; color:white;"> Create Account  </button>
+
+          </div> <!-- form-group// -->      
+          <p class="text-center"style="font-size:200%; ">Have an account? <a style="color:#14328f;" href="{% url 'login-page' %}">Log In</a> </p>
+        </form>
+
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

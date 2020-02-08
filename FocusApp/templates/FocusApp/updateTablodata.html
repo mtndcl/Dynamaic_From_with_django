@@ -1,0 +1,92 @@
+
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>profile page</title>
+{% endblock %}
+
+
+
+
+{% block mainlink %}
+<a class="navbar-brand" style="font-family: 'Girassol', cursive; font-size: 400%;margin-right:0; "href="{% url 'profile-page'  page='0' %}">FOCUS |</a>
+<a class="navbar-brand" style="font-size: 150%; padding-left:0%; padding-top : 25px; margin-left:0;" href="{% url 'profile-page'   page='0' %}">Data Platform for Clinical Studies</a>
+{% endblock %}
+
+
+{% block navbar %}
+  {% if user.is_authenticated %}
+    <strong style="font-size:200%;color:white;">{{ user.first_name }} </strong>
+  {% endif %}
+  <form class="form-inline my-2 my-lg-0">
+
+      <li class="nav-item list-unstyled col-md-6">
+          <button class="btn btn-success btn-lg col-md-offset-6" style="background-color: red;border-color:red;color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'logout-page'%}'">Log out </button>
+        </li>
+  </form>
+{% endblock %}
+
+ 
+
+{% block content %}
+
+<div style=" background-color: #F5F5F5; border: 0.05px solid  lightsteelblue;  padding: 50px; max-width:80%; margin-left:10%; font-size: 200%; font-family: 'Rubik', sans-serif;">
+<h5 style="font-size:180%;  text-align:center;">Update Form </h5>
+  {% if messages %}
+        <div class="text-danger">
+          {% for message in messages %}
+
+            <div  class="container align-self-center">
+              <div  class="row justify-content-center">
+
+
+                <label>  <b>{{ message }}</b></label>
+
+              </div>
+            </div>
+
+          {% endfor %}
+        </div>
+      {% endif %}
+
+
+
+ <form  method="post"  action="{%url 'updateFromTablo-page'  project_id=project_id  data_id=data_id%}">
+     {% csrf_token %}
+
+
+
+    {% for value,field in mydata %}
+
+      {% if field.fieldmondatory %}
+      <a style="position: fixed;  margin-top:1.8%; font-size:100%;text-transform:capitalize;">{{field.fieldname}}*</a>
+      {% else %}
+      <a style="position: fixed;  margin-top:1.8%; font-size:100%;text-transform:capitalize;">{{field.fieldname}}</a>
+      {% endif %}
+      {% if field.fieldtype == 'Date'%}     
+        <input type="date" style=" margin-left:20%; margin-top:2%;margin-right:2%;width: 10em" name="{{field.fieldname}}*" value="{{value}}">
+        
+      {% endif %}
+      {% if field.fieldtype == 'Text'%}
+        <input type="text" style=" margin-left:20%; margin-top:2%; margin-right:2%;width: 15em" name="{{field.fieldname}}" value="{{value}}">
+      {% endif %}
+      {% if field.fieldtype == 'Integer'%}
+        <input type="number" style=" margin-left:20%; margin-top:2%; margin-right:2%;width: 7em" name="{{field.fieldname}}" value="{{value}}">
+      {% endif %}
+      {% if field.fieldtype == 'Double'%}
+        <input type="number" step="0.01" style=" margin-left:20%; margin-right:2%;margin-top:2%;width: 7em" name="{{field.fieldname}}" value="{{value}}">
+      {% endif %}
+      {% if field.fieldtype == 'Checkbox'%}
+        <input type="checkbox"  style=" margin-left:20.5%; transform : scale(2);margin-top:3%;" name="{{field.fieldname}}" value="{{value}}">
+      {% endif %}
+      <br>
+    {% endfor %}
+
+
+    <button class="btn " style="margin-left:5%; margin-top:2%;background-color: #14328f;margin-left:45%; color: white; padding: 8px 20px; font-size:20px;" type="submit" >Update</button>
+  </form>
+
+</div>
+
+
+{% endblock %}

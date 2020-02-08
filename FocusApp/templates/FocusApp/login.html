@@ -1,0 +1,90 @@
+{% extends 'FocusApp/base.html' %}
+
+
+<!-- Set Title -->
+{% block title %}
+
+ <title>Login Page</title>
+
+{% endblock %}
+
+
+<!-- Set navbar Buttons -->
+{% block navbar %}
+
+  <form class="form-inline my-2 my-lg-0">
+
+      <li class="nav-item list-unstyled col-md-6">
+          <button class="btn  col-md-offset-6" style="background-color: #14328f;color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'register-page'%}'">Register </button>
+        </li>
+  </form>
+{% endblock %}
+
+
+
+<!-- Login Page Content-->
+{% block content %}
+
+
+
+<br>
+<br>
+<br>
+<div  class="container align-self-center">
+  <div  class="row justify-content-center">
+    <div class="form-group col-5">
+      {% if messages %}
+        <div class="text-danger">
+          {% for message in messages %}
+
+            <div  class="container align-self-center">
+              <div  class="row justify-content-center">
+
+
+                <label>  <b>{{ message }}</b></label>
+                
+              </div>
+            </div>
+
+          {% endfor %}
+        </div>
+      {% endif %}
+      <section id="cover">
+        <div class="modal-dialog modal-login" >
+          <div class="modal-content">
+            <div class="modal-header">        
+              <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+              <form  method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <i class="fa fa-user"></i>
+                  <input type="text" class="form-control" style="font-size:200%;" name="email" placeholder="Email" required="required"  value="1@gmail.com">
+                </div>
+                <div class="form-group">
+                  <i class="fa fa-lock"></i>
+                  <input type="password" class="form-control" placeholder="Password"style="font-size:200%;" required="required" name="password" placeholder="Password" value="7Miyemedimi">
+                </div>
+                <div class="form-group">
+                  <input type="submit" class=" btn"style=" width:100%;font-size:200%;background-color:#14328f; color:white;" value="Login">
+                </div>
+              </form>       
+              
+            </div>
+            <div class="modal-footer"style="font-size:150%;">
+              <a href="{% url 'forgotpassword-page' %}">Forgot Password?</a>
+              <br>
+              <a href="{% url 'register-page' %}">Dont have account?</a>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+           
+  </div>           
+                
+</div>
+
+{% endblock %}                     

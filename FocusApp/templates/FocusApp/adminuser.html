@@ -1,0 +1,100 @@
+{% extends 'FocusApp/base.html' %}
+
+{% block title %}
+<title>admin page</title>
+{% endblock %}
+
+
+{% block navbar %}
+
+  <form class="form-inline my-2 my-lg-0">
+
+      <li class="nav-item list-unstyled col-md-6">
+          <button class="btn btn-success btn-lg col-md-offset-6" style="background-color: red;border-color:red;color: white; padding: 3px 10px; font-size:20px;" type="button" onclick="location.href='{% url 'logout-page'%}'">Log out </button>
+        </li>
+  </form>
+{% endblock %}
+
+
+{% block content %}
+
+
+     <button class="btn  col-sm-1 col-sm-offset-2 col-md-1 col-md-offset-4" style="background-color: #14328f; color: white; height:40px; padding: 2px 6px; font-size:15px;"type="button" onclick="location.href='{% url 'adminuser-page' page=page  %}'" >Users </button>
+
+     <button class="btn  col-sm-1 col-sm-offset-3 col-md-1 col-md-offset-1" style="background-color: #14328f; color: white; height:40px; padding: 2px 6px; font-size:15px;" type="button" onclick="location.href='{% url 'adminproject-page' page='0' %}'">Projects </button>
+
+<br>
+<br>
+<br>
+<br>
+<div style=" background-color: #F5F5F5; border: 0.05px solid  lightsteelblue;  padding: 50px; max-width:96%; margin-left:2%;font-size: 200%; font-family: 'Rubik', sans-serif;">
+
+<table class="table table-striped table-bordered table-sm"> 
+
+
+    <thead class="thead-dark">  
+    <tr>  
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>User Email</th>
+        <th>User Contact</th>
+        <th>Activation Status</th>
+        <th> Mail Activation Done?</th>
+       
+    </tr>  
+    </thead>
+    <tbody>  
+{% for user in all_user %}  
+    
+  
+    <tr>  
+
+
+        <td>{{ user.id }}</td>  
+        <td>{{ user.first_name }}</td>  
+        <td>{{ user.email }}</td>  
+        <td>{{ user.profile.phone_number }}</td>  
+        <td>
+        	
+        {% if  not user.is_superuser %}
+        	{% if  not user.is_active %}
+   				   <button class="btn" style="background-color: green; color: white; margin-left:25%; padding: 2px 6px; font-size:15px;" type="button" onclick="location.href='{% url 'isactive-page' slug=user.username   page=page %}'">Set Active </button>
+   			  {% else  %}
+   				   <button class="btn" style="background-color: red; color: white; margin-left:25%; padding: 2px 6px; font-size:15px;"  type="button" onclick="location.href='{% url 'isactive-page' slug=user.username page=page %}'">Block User </button>
+
+			     {% endif %}
+
+       {% endif %}
+            
+        </td>
+   <td>
+        {% if  not user.is_superuser %}
+           {% if  not user.profile.is_confirm %}
+            <i class="fas fa-times-circle " style="margin-left:45%; color:red;"></i>
+            {% else  %}
+              <i class="fas fa-check-circle " style="margin-left:45%; color:green;"></i>
+
+            {% endif %}
+           {% endif %}
+      </td>
+
+    </tr>  
+    
+{% endfor %}  
+    </tbody>  
+</table>
+    </div>
+<br>  
+<br>  
+<div style="position:fixed; margin-left:42%; bottom:5px;">
+  <i  class="fas fa-arrow-circle-left fa-3x"
+   onclick="location.href='{% url 'backwarddadminpage-page' page=page %}'" 
+   style="background-color: #14328f; color: white; padding: 4px 40px; "  ></i>
+
+ <i  class="fas fa-arrow-circle-right fa-3x"
+  onclick="location.href='{% url 'forwardadminuserpage-page' page=page %}'" style="background-color: #14328f; color: white; padding: 4px 40px; "  ></i>
+
+</div>
+
+        
+{% endblock %}
